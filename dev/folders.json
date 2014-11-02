@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Aquire",
+		"type": "folder",
+		"dataAttributes": { "id": "aquire-folder" }
+	},
+	{
+		"name": "Onboard",
+		"type": "folder"
+	},
+	{
+		"name": "Engage",
+		"type": "folder",
+		"dataAttributes": { "id": "engage-folder" },
+		"children":[
+			{
+				"name": "Abandoned Cart",
+				"type": "folder",
+				"children": [
+					{
+						"name": "Archive",
+						"type": "folder"
+					}
+				]
+			},
+			{
+				"name": "Transactional",
+				"type": "folder",
+				"children": [
+					{
+						"name": "Archive",
+						"type": "folder"
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "Retain",
+		"type": "folder"
+	}
+]

@@ -164,4 +164,68 @@
 
 	}
 
+	// intermediate checkbox enabled
+	&.tree-intermediate {
+
+		.tree-selected > .tree-branch-header .tree-branch-name, .tree-selected.tree-item .tree-item-name{
+			background-color: transparent !important;
+			color: #000 !important;
+			&:hover {
+				background-color: transparent !important;
+				color: #000 !important;
+			}
+		}
+
+		.branch-open > .tree-branch-header .glyphicon-play {
+			transform:rotate(90deg);
+			-ms-transform:rotate(90deg);
+			-webkit-transform:rotate(90deg);
+			position: relative;
+			top: -2px;
+			left: 8px !important;
+		}
+
+		&.tree-child-selected {
+			> .tree-branch-header{
+				.tree-branch-name {
+					background-color: #bebebe;
+				}
+
+			}
+
+		}
+
+		.checkbox {
+			display: inline-block;
+			.checkbox-custom:before {
+				top: -12px;
+			}
+		}
+
+		.icon-caret {
+			background-color: transparent;
+			border: 0;
+			left: 10px;
+		}
+
+		.tree-item {
+			margin-left: 8px;
+			.tree-label {
+				padding-left:5px;
+			}
+		}
+		.tree-branch-header {
+			.icon-caret {
+				padding-right: 0;
+				margin-right: -5px;
+				left: 6px;
+			}
+			.tree-branch-name {
+				position: relative;
+				left: 10px;
+				padding-left: 2px;
+			}
+		}
+	}
+
 }
