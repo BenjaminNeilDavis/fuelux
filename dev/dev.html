@@ -4,16 +4,13 @@
 	<meta charset="utf-8">
 	<title>dev.html</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-
-	<!--<link href="../dist/css/fuelux.css" rel="stylesheet" type="text/css">-->
-
-	<!--CLIENT-SIDE LESS COMPILATION FOR WATCHER-LESS DEV-->
+	<!--<link href="../dist/css/fuelux.css" rel="stylesheet" type="text/css">-->    <!--CLIENT-SIDE LESS COMPILATION FOR WATCHER-LESS DEV-->
 	<link href="../less/fuelux.less" rel="stylesheet/less" type="text/css"/>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.0/less.min.js"></script>
-	<script type="text/javascript">if(window.console && window.console.clear){ window.console.clear(); }</script>
-
+	<script type="text/javascript">if (window.console && window.console.clear) {
+		window.console.clear();
+	}</script>
 	<script src="../bower_components/requirejs/require.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		(function () {
@@ -28,7 +25,8 @@
 					underscore: '../bower_components/underscore/underscore',
 					bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
 					//moment: '../bower_components/moment/min/moment-with-langs',
-					fuelux: '../js'
+					fuelux: '../js',
+					handlebars: '../bower_components/handlebars/handlebars'
 				},
 				shim: {
 					'bootstrap': {
@@ -38,216 +36,316 @@
 				}
 			});
 		})();
-		require(['jquery', '../data', 'fuelux/all'], function($, data){
+		require(['jquery', 'fuelux/all'], function ($) {
 			//REPEATER
-			var delays = ['300', '600', '900', '1200'];
-			var $myRepeater = $('#myRepeater');
-
-			var list = function(options, callback){
-				var resp = {
-					count: data.repeater.listData.length,
-					items: [],
-					page: options.pageIndex
-				};
-				var i, l;
-
-				resp.pages = Math.ceil(resp.count/(options.pageSize || 50));
-
-				i = options.pageIndex * (options.pageSize || 50);
-				l = i + (options.pageSize || 50);
-				l = (l <= resp.count) ? l : resp.count;
-				resp.start = i + 1;
-				resp.end = l;
-
-				resp.columns = [
-					{
-						label: 'Common Name',
-						property: 'commonName',
-						sortable: true,
-						className: 'rover'
-					},
-					{
-						label: 'Latin Name',
-						property: 'latinName',
-						sortable: true
-					},
-					{
-						label: 'Appearance',
-						property: 'appearance',
-						sortable: true,
-						className: 'blub'
-					},
-					{
-						label: 'Sound',
-						property: 'sound',
-						sortable: true
-					}
-				];
-
-				for(i; i<l; i++){
-					resp.items.push(data.repeater.listData[i]);
-				}
-
-				//if(options.search){
-				//resp.items = [];
-				//}
-
-				setTimeout(function(){
-					callback(resp);
-				}, delays[Math.floor(Math.random() * 4)]);
-			};
-
-			var thumbnail = function(options, callback){
-				var categories = ['abstract', 'animals', 'business', 'cats', 'city', 'food', 'nature', 'technics', 'transport'];
-				var numItems = 200;
-				var resp = {
-					count: numItems,
-					items: [],
-					pages: (Math.ceil(numItems/(options.pageSize || 30))),
-					page: options.pageIndex
-				};
-				var i, l;
-
-				i = options.pageIndex * (options.pageSize || 30);
-				l = i + (options.pageSize || 30);
-				resp.start = i + 1;
-				resp.end = l;
-
-				for(i; i<l; i++){
-					resp.items.push({
-						name: ('Thumbnail ' + (i + 1)),
-						src: 'http://lorempixel.com/65/75/' + categories[Math.floor(Math.random() * 9)] + '/?_=' + i
-					});
-				}
-
-				//if(options.search){
-				//resp.items = [];
-				//}
-
-				setTimeout(function(){
-					callback(resp);
-				}, delays[Math.floor(Math.random() * 4)]);
-			};
-
-			$myRepeater.repeater({
-				dataSource: function(options, callback){
-					if(options.view==='list'){
-						list(options, callback);
-					}else if(options.view==='thumbnail'){
-						thumbnail(options, callback);
-					}
-				},
-				list_highlightSortedColumn: true,
-				list_selectable: 'multi',
-				list_noItemsHTML: 'no items found',
-				list_infiniteScroll: true,
-				thumbnail_noItemsHTML: 'no items found',
-				thumbnail_infiniteScroll: { hybrid: true },
-				thumbnail_selectable: true
+			$('#myColorpicker1').on('changed.fu.colorpicker', function (e, data) {
+				// do something
+				console.log(data);
 			});
+
+			var myColors = ["#FF00FF", "#FFCC00",  "#FFFF00", "#00FF00", "#00FFFF", "#00CCFF", "#993366",
+							"#C0C0C0", "#FF99CC", "#FFCC99", "#FFFF99", "#CCFFCC", "#CCFFFF", "#99CCFF",
+							"#CC99FF", "#FFFFFF"];
+
+			$('#myColorpicker').colorpicker({
+				savedColors: myColors,
+				generateTemplate: true
+			});
+			$('#myColorpicker2').colorpicker({
+				showRecentColors: false
+			});
+
 		});
 	</script>
 </head>
-
 <body style="padding: 20px;">
-	<div class="container" style="padding: 20px; margin-top:20px;">
+<div class="container" style="padding: 20px; margin-top:20px;">
+	<div id="myColorpicker">
 
-		<div class="repeater" data-staticheight="400" id="myRepeater">
-			<div class="repeater-header">
-				<div class="repeater-header-left">
-					<span class="repeater-title">Awesome Repeater</span>
-					<div class="repeater-search">
-						<div class="search input-group">
-							<input type="search" class="form-control" placeholder="Search"/>
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">
-							<span class="glyphicon glyphicon-search"></span>
-							<span class="sr-only">Search</span>
-						</button>
-					</span>
-						</div>
-					</div>
-				</div>
-				<div class="repeater-header-right">
-					<div class="btn-group selectlist repeater-filters" data-resize="auto">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<span class="selected-label">&nbsp;</span>
-							<span class="caret"></span>
-							<span class="sr-only">Toggle Filters</span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li data-value="all" data-selected="true"><a href="#">All</a></li>
-							<li data-value="some"><a href="#">Some</a></li>
-							<li data-value="others"><a href="#">Others</a></li>
-						</ul>
-						<input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
-					</div>
-					<div class="btn-group repeater-views" data-toggle="buttons">
-						<label class="btn btn-default active">
-							<input name="repeaterViews" type="radio" value="list"><span class="glyphicon glyphicon-list"></span>
-						</label>
-						<label class="btn btn-default">
-							<input name="repeaterViews" type="radio" value="thumbnail"><span class="glyphicon glyphicon-th"></span>
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="repeater-viewport">
-				<div class="repeater-canvas"></div>
-				<div class="loader repeater-loader"></div>
-			</div>
-			<div class="repeater-footer">
-				<div class="repeater-footer-left">
-					<div class="repeater-itemization">
-						<span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> items</span>
-						<div class="btn-group selectlist" data-resize="auto">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-								<span class="selected-label">&nbsp;</span>
-								<span class="caret"></span>
-								<span class="sr-only">Toggle Dropdown</span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li data-value="5"><a href="#">5</a></li>
-								<li data-value="10" data-selected="true"><a href="#">10</a></li>
-								<li data-value="20"><a href="#">20</a></li>
-								<li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
-								<li data-value="100"><a href="#">100</a></li>
-							</ul>
-							<input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
-						</div>
-						<span>Per Page</span>
-					</div>
-				</div>
-				<div class="repeater-footer-right">
-					<div class="repeater-pagination">
-						<button type="button" class="btn btn-default btn-sm repeater-prev">
-							<span class="glyphicon glyphicon-chevron-left"></span>
-							<span class="sr-only">Previous Page</span>
-						</button>
-						<label id="myPageLabel" class="page-label">Page</label>
-						<div class="repeater-primaryPaging active">
-							<div class="input-group input-append dropdown combobox">
-								<input type="text" class="form-control" aria-labelledby="MyPageLabel">
-								<div class="input-group-btn">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-										<span class="caret"></span>
-										<span class="sr-only">Toggle Dropdown</span>
-									</button>
-									<ul class="dropdown-menu dropdown-menu-right"></ul>
+		</div>
+</div>
+<div class="container" style="padding: 20px; margin-top:20px;">
+	<div id="myColorpicker2" class="colorpicker" data-initialize="colorpicker" data-foreground="true">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-font current-color"></span> <span class="sr-only">Toggle Color Picker</span>
+					<span class="caret"></span>
+				</button>
+				<div class="dropdown-menu dropdown-menu-left colorpicker-wrapper" role="menu">
+					<!-- Tab nav -->
+					<ul class="nav nav-tabs nav-justified" role="tablist">
+						<li role="presentation" class="active"><a href="#basic1" role="tab" data-toggle="tab">Basic</a></li>
+						<li role="presentation"><a href="#saved1" role="tab" data-toggle="tab">Saved</a></li>
+						<li role="presentation"><a href="#recent1" role="tab" data-toggle="tab">Recent</a></li>
+						<li role="presentation"><a href="#advanced1" role="tab" data-toggle="tab">Advanced</a></li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="basic1">
+							<div class="colorpicker-palette">
+								<div class="container-fluid">
+									<span class="palette-color" style="background-color:#000000" data-color="#000000" title="Black"></span>
+									<span class="palette-color" style="background-color:#993300" data-color="#993300" title="Brown"></span>
+									<span class="palette-color" style="background-color:#333300" data-color="#333300" title="Olive Green"></span>
+									<span class="palette-color" style="background-color:#003300" data-color="#003300" title="Dark Green"></span>
+									<span class="palette-color" style="background-color:#003366" data-color="#003366" title="Dark Teal"></span>
+									<span class="palette-color" style="background-color:#000080" data-color="#000080" title="Dark Blue"></span>
+									<span class="palette-color" style="background-color:#333399" data-color="#333399" title="Indigo"></span>
+									<span class="palette-color" style="background-color:#333333" data-color="#333333" title="Gray"></span>
+								</div>
+								<div class="container-fluid">
+									<span class="palette-color" style="background-color:#800000" data-color="#800000" title="Dark Red"></span>
+									<span class="palette-color" style="background-color:#FF6600" data-color="#FF6600" title="Orange"></span>
+									<span class="palette-color" style="background-color:#808000" data-color="#808000" title="Dark Yellow"></span>
+									<span class="palette-color" style="background-color:#008000" data-color="#008000" title="Green"></span>
+									<span class="palette-color" style="background-color:#008080" data-color="#008080" title="Teal"></span>
+									<span class="palette-color" style="background-color:#0000FF" data-color="#0000FF" title="Blue"></span>
+									<span class="palette-color" style="background-color:#666699" data-color="#666699" title="Blue-Gray"></span>
+									<span class="palette-color" style="background-color:#808080" data-color="#808080" title="Gray-50%"></span>
+								</div>
+								<div class="container-fluid">
+									<span class="palette-color" style="background-color:#FF0000" data-color="#FF0000" title="Red"></span>
+									<span class="palette-color" style="background-color:#FF9900" data-color="#FF9900" title="Light Orange"></span>
+									<span class="palette-color" style="background-color:#99CC00" data-color="#99CC00" title="Lime"></span>
+									<span class="palette-color" style="background-color:#339966" data-color="#339966" title="Sea Green"></span>
+									<span class="palette-color" style="background-color:#33CCCC" data-color="#33CCCC" title="Aqua"></span>
+									<span class="palette-color" style="background-color:#3366FF" data-color="#3366FF" title="Light Blue"></span>
+									<span class="palette-color" style="background-color:#800080" data-color="#800080" title="Violet"></span>
+									<span class="palette-color" style="background-color:#999999" data-color="#999999" title="Gray-40%"></span>
+								</div>
+								<div class="container-fluid">
+									<span class="palette-color" style="background-color:#FF00FF" data-color="#FF00FF" title="Pink"></span>
+									<span class="palette-color" style="background-color:#FFCC00" data-color="#FFCC00" title="Gold"></span>
+									<span class="palette-color" style="background-color:#FFFF00" data-color="#FFFF00" title="Yellow"></span>
+									<span class="palette-color" style="background-color:#00FF00" data-color="#00FF00" title="Bright Green"></span>
+									<span class="palette-color" style="background-color:#00FFFF" data-color="#00FFFF" title="Turquoise"></span>
+									<span class="palette-color" style="background-color:#00CCFF" data-color="#00CCFF" title="Sky Blue"></span>
+									<span class="palette-color" style="background-color:#993366" data-color="#993366" title="Plum"></span>
+									<span class="palette-color" style="background-color:#C0C0C0" data-color="#C0C0C0" title="Gray-25%"></span>
+								</div>
+								<div class="container-fluid">
+									<span class="palette-color" style="background-color:#FF99CC" data-color="#FF99CC" title="Rose"></span>
+									<span class="palette-color" style="background-color:#FFCC99" data-color="#FFCC99" title="Tan"></span>
+									<span class="palette-color" style="background-color:#FFFF99" data-color="#FFFF99" title="Light Yellow"></span>
+									<span class="palette-color" style="background-color:#CCFFCC" data-color="#CCFFCC" title="Light Green"></span>
+									<span class="palette-color" style="background-color:#CCFFFF" data-color="#CCFFFF" title="Light Turquoise"></span>
+									<span class="palette-color" style="background-color:#99CCFF" data-color="#99CCFF" title="Pale Blue"></span>
+									<span class="palette-color" style="background-color:#CC99FF" data-color="#CC99FF" title="Lavendar"></span>
+									<span class="palette-color" style="background-color:#FFFFFF" data-color="#FFFFFF" title="White"></span>
 								</div>
 							</div>
 						</div>
-						<input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="MyPageLabel">
-						<span>of <span class="repeater-pages"></span></span>
-						<button type="button" class="btn btn-default btn-sm repeater-next">
-							<span class="glyphicon glyphicon-chevron-right"></span>
-							<span class="sr-only">Next Page</span>
-						</button>
+						<div role="tabpanel" class="tab-pane" id="saved1">
+							<div class="colorpicker-saved">
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="recent1">
+							<div class="colorpicker-recent">
+							</div>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="advanced1">...</div>
+					</div>
+				</div>
+			</div>
+			<input class="form-control colorpicker-input" type="text">
+		</div>
+		<input class="hidden hidden-field" name="myColorpicker2" readonly="readonly" aria-hidden="true" type="text"/>
+	</div>
+</div>
+<div class="container" style="padding: 20px; margin-top:20px;">
+	<div id="myColorpicker1" class="colorpicker" data-initialize="colorpicker">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<span class="glyphicon glyphicon-colorpicker current-color"></span> <span class="sr-only">Toggle Color Picker</span>
+				<span class="caret"></span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-left colorpicker-wrapper" role="menu">
+				<!-- Tab nav -->
+				<ul class="nav nav-tabs nav-justified" role="tablist">
+					<li role="presentation" class="active"><a href="#basic2" role="tab" data-toggle="tab">Basic</a></li>
+					<li role="presentation"><a href="#saved2" role="tab" data-toggle="tab">Saved</a></li>
+					<li role="presentation"><a href="#recent2" role="tab" data-toggle="tab">Recent</a></li>
+					<li role="presentation"><a href="#advanced2" role="tab" data-toggle="tab">Advanced</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="basic2">
+						<div class="colorpicker-palette">
+							<div class="container-fluid">
+								<span class="palette-color" style="background-color:#000000" data-color="#000000" title="Black"></span>
+								<span class="palette-color" style="background-color:#993300" data-color="#993300" title="Brown"></span>
+								<span class="palette-color" style="background-color:#333300" data-color="#333300" title="Olive Green"></span>
+								<span class="palette-color" style="background-color:#003300" data-color="#003300" title="Dark Green"></span>
+								<span class="palette-color" style="background-color:#003366" data-color="#003366" title="Dark Teal"></span>
+								<span class="palette-color" style="background-color:#000080" data-color="#000080" title="Dark Blue"></span>
+								<span class="palette-color" style="background-color:#333399" data-color="#333399" title="Indigo"></span>
+								<span class="palette-color" style="background-color:#333333" data-color="#333333" title="Gray"></span>
+							</div>
+							<div class="container-fluid">
+								<span class="palette-color" style="background-color:#800000" data-color="#800000" title="Dark Red"></span>
+								<span class="palette-color" style="background-color:#FF6600" data-color="#FF6600" title="Orange"></span>
+								<span class="palette-color" style="background-color:#808000" data-color="#808000" title="Dark Yellow"></span>
+								<span class="palette-color" style="background-color:#008000" data-color="#008000" title="Green"></span>
+								<span class="palette-color" style="background-color:#008080" data-color="#008080" title="Teal"></span>
+								<span class="palette-color" style="background-color:#0000FF" data-color="#0000FF" title="Blue"></span>
+								<span class="palette-color" style="background-color:#666699" data-color="#666699" title="Blue-Gray"></span>
+								<span class="palette-color" style="background-color:#808080" data-color="#808080" title="Gray-50%"></span>
+							</div>
+							<div class="container-fluid">
+								<span class="palette-color" style="background-color:#FF0000" data-color="#FF0000" title="Red"></span>
+								<span class="palette-color" style="background-color:#FF9900" data-color="#FF9900" title="Light Orange"></span>
+								<span class="palette-color" style="background-color:#99CC00" data-color="#99CC00" title="Lime"></span>
+								<span class="palette-color" style="background-color:#339966" data-color="#339966" title="Sea Green"></span>
+								<span class="palette-color" style="background-color:#33CCCC" data-color="#33CCCC" title="Aqua"></span>
+								<span class="palette-color" style="background-color:#3366FF" data-color="#3366FF" title="Light Blue"></span>
+								<span class="palette-color" style="background-color:#800080" data-color="#800080" title="Violet"></span>
+								<span class="palette-color" style="background-color:#999999" data-color="#999999" title="Gray-40%"></span>
+							</div>
+							<div class="container-fluid">
+								<span class="palette-color" style="background-color:#FF00FF" data-color="#FF00FF" title="Pink"></span>
+								<span class="palette-color" style="background-color:#FFCC00" data-color="#FFCC00" title="Gold"></span>
+								<span class="palette-color" style="background-color:#FFFF00" data-color="#FFFF00" title="Yellow"></span>
+								<span class="palette-color" style="background-color:#00FF00" data-color="#00FF00" title="Bright Green"></span>
+								<span class="palette-color" style="background-color:#00FFFF" data-color="#00FFFF" title="Turquoise"></span>
+								<span class="palette-color" style="background-color:#00CCFF" data-color="#00CCFF" title="Sky Blue"></span>
+								<span class="palette-color" style="background-color:#993366" data-color="#993366" title="Plum"></span>
+								<span class="palette-color" style="background-color:#C0C0C0" data-color="#C0C0C0" title="Gray-25%"></span>
+							</div>
+							<div class="container-fluid">
+								<span class="palette-color" style="background-color:#FF99CC" data-color="#FF99CC" title="Rose"></span>
+								<span class="palette-color" style="background-color:#FFCC99" data-color="#FFCC99" title="Tan"></span>
+								<span class="palette-color" style="background-color:#FFFF99" data-color="#FFFF99" title="Light Yellow"></span>
+								<span class="palette-color" style="background-color:#CCFFCC" data-color="#CCFFCC" title="Light Green"></span>
+								<span class="palette-color" style="background-color:#CCFFFF" data-color="#CCFFFF" title="Light Turquoise"></span>
+								<span class="palette-color" style="background-color:#99CCFF" data-color="#99CCFF" title="Pale Blue"></span>
+								<span class="palette-color" style="background-color:#CC99FF" data-color="#CC99FF" title="Lavendar"></span>
+								<span class="palette-color" style="background-color:#FFFFFF" data-color="#FFFFFF" title="White"></span>
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="saved2">
+						<div class="colorpicker-saved">
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="recent2">
+						<div class="colorpicker-recent">
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="advanced2">
+						<div class="colorpicker-advanced">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		<input class="hidden hidden-field" name="myColorpicker1" readonly="readonly" aria-hidden="true" type="text"/>
 	</div>
+</div>
 </body>
 </html>
+<div class="colorpicker">
+	<div class="colpick">
+		<div class="colpick_color">
+			<div class="colpick_color_overlay1">
+				<div class="colpick_color_overlay2">
+					<div class="colpick_selector_outer">
+						<div class="colpick_selector_inner"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="colpick_hue">
+			<div class="colpick_hue_arrs">
+				<div class="colpick_hue_larr"></div>
+				<div class="colpick_hue_rarr"></div>
+			</div>
+		</div>
+		<div class="colpick_new_color"></div>
+		<div class="colpick_current_color"></div>
+		<div class="colpick_hex_field input-group">
+			<div class="colpick_field_letter">#</div>
+			<input type="text" maxlength="6" size="6"/>
+		</div>
+		<div class="spinbox pull-right spinbox-xs colpick_rgb_r colpick_field" data-initialize="spinbox">
+			<div class="colpick_field_letter">R</div>
+			<input type="text" class="form-control input-mini spinbox-input" maxlength="3" size="3"/>
+
+			<div class="spinbox-buttons btn-group btn-group-vertical">
+				<button class="btn btn-default spinbox-up btn-xs">
+					<span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only">Increase</span>
+				</button>
+				<button class="btn btn-default spinbox-down btn-xs">
+					<span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only">Decrease</span>
+				</button>
+			</div>
+		</div>
+		<div class="spinbox pull-right spinbox-xs colpick_rgb_g colpick_field" data-initialize="spinbox">
+			<div class="colpick_field_letter">G</div>
+			<input type="text" class="form-control input-mini spinbox-input" maxlength="3" size="3"/>
+
+			<div class="spinbox-buttons btn-group btn-group-vertical">
+				<button class="btn btn-default spinbox-up btn-xs">
+					<span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only">Increase</span>
+				</button>
+				<button class="btn btn-default spinbox-down btn-xs">
+					<span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only">Decrease</span>
+				</button>
+			</div>
+		</div>
+		<div class="spinbox pull-right spinbox-xs colpick_rgb_b colpick_field" data-initialize="spinbox">
+			<div class="colpick_field_letter">B</div>
+			<input type="text" class="form-control input-mini spinbox-input" maxlength="3" size="3"/>
+
+			<div class="spinbox-buttons btn-group btn-group-vertical">
+				<button class="btn btn-default spinbox-up btn-xs">
+					<span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only">Increase</span>
+				</button>
+				<button class="btn btn-default spinbox-down btn-xs">
+					<span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only">Decrease</span>
+				</button>
+			</div>
+		</div>
+		<div class="spinbox pull-right spinbox-xs colpick_hsb_h colpick_field" data-initialize="spinbox">
+			<div class="colpick_field_letter">H</div>
+			<input type="text" class="form-control input-mini spinbox-input" maxlength="3" size="3"/>
+
+			<div class="spinbox-buttons btn-group btn-group-vertical">
+				<button class="btn btn-default spinbox-up btn-xs">
+					<span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only">Increase</span>
+				</button>
+				<button class="btn btn-default spinbox-down btn-xs">
+					<span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only">Decrease</span>
+				</button>
+			</div>
+		</div>
+		<div class="spinbox pull-right spinbox-xs colpick_hsb_s colpick_field" data-initialize="spinbox">
+			<div class="colpick_field_letter">S</div>
+			<input type="text" class="form-control input-mini spinbox-input" maxlength="3" size="3"/>
+
+			<div class="spinbox-buttons btn-group btn-group-vertical">
+				<button class="btn btn-default spinbox-up btn-xs">
+					<span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only">Increase</span>
+				</button>
+				<button class="btn btn-default spinbox-down btn-xs">
+					<span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only">Decrease</span>
+				</button>
+			</div>
+		</div>
+		<div class="spinbox pull-right spinbox-xs colpick_hsb_b colpick_field" data-initialize="spinbox">
+			<div class="colpick_field_letter">B</div>
+			<input type="text" class="form-control input-mini spinbox-input" maxlength="3" size="3"/>
+
+			<div class="spinbox-buttons btn-group btn-group-vertical">
+				<button class="btn btn-default spinbox-up btn-xs">
+					<span class="glyphicon glyphicon-chevron-up"></span><span class="sr-only">Increase</span>
+				</button>
+				<button class="btn btn-default spinbox-down btn-xs">
+					<span class="glyphicon glyphicon-chevron-down"></span><span class="sr-only">Decrease</span>
+				</button>
+			</div>
+		</div>
+		<button id="colpick_submit" type="button" class="btn btn-default"></button>
+	</div>
+</div>
+<div class="clearfix"></div>

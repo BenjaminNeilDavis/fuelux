@@ -66,6 +66,7 @@ module.exports = function(grunt) {
 					// manually concatenate JS files (due to dependency management)
 					'dist/js/fuelux.js': [
 						'js/checkbox.js',
+						'js/colpick.js',
 						'js/combobox.js',
 						'js/datepicker.js',
 						'js/dropdown-autoflip.js',
@@ -78,13 +79,15 @@ module.exports = function(grunt) {
 						'js/tree.js',
 						'js/wizard.js',
 
+
 						//items with dependencies on other controls
 						'js/infinite-scroll.js',
 						'js/pillbox.js',
 						'js/repeater.js',
 						'js/repeater-list.js',
 						'js/repeater-thumbnail.js',
-						'js/scheduler.js'
+						'js/scheduler.js',
+						'js/colorpicker.js'
 					]
 				},
 				options: {
@@ -326,6 +329,21 @@ module.exports = function(grunt) {
 					livereload: true
 				},
 				tasks: ['test']
+			}
+		},
+		handlebars: {
+			options: {
+				namespace: 'Templates',
+				amd: true,
+				partialsUseNamespace: true,
+				processName: function(filePath) {
+					return filePath.replace(/^templates\//, '').replace(/\.hbs$/, '');
+				}
+			},
+			all: {
+				files: {
+					"js/templates.js": ["templates/**/*.hbs"]
+				}
 			}
 		}
 	});

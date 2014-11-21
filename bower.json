@@ -21,7 +21,8 @@
     "jquery-1.11.0": "jquery#1.11.0",
     "requirejs": "~2.1.11",
     "bootstrap": "~3.2.0",
-    "moment": "2.7.0"
+    "moment": "2.7.0",
+    "handlebars": "~2.0.0"
   },
   "devDependencies": {
     "jquery": null,

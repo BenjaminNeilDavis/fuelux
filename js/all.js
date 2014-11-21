@@ -22,8 +22,11 @@
 
 	require('jquery');
 	require('bootstrap');
+	require('handlebars');
 
 	require('fuelux/checkbox');
+	require('fuelux/colorpicker');
+	require('fuelux/colpick');
 	require('fuelux/combobox');
 	require('fuelux/datepicker');
 	require('fuelux/dropdown-autoflip');
