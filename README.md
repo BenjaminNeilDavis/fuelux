@@ -32,19 +32,19 @@ Add `fuelux` class to the portion of the page using Fuel UX as seen [here](https
 Ensure all the dependencies are included on the page (eg, such as using the CDN as shown below).
 ```
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-<link href="//www.fuelcdn.com/fuelux/3.1.0/css/fuelux.min.css" rel="stylesheet">
+<link href="//www.fuelcdn.com/fuelux/3.4.0/css/fuelux.min.css" rel="stylesheet">
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//www.fuelcdn.com/fuelux/3.1.0/js/fuelux.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.1/js/bootstrap.min.js"></script>
+<script src="//www.fuelcdn.com/fuelux/3.4.0/js/fuelux.min.js"></script>
 
 ```
 
 ### Install
 A few ways available to install.
 
-- Request files from [the Fuel UX CDN](http://www.fuelcdn.com/fuelux/3.1.0/)
-- [Download the latest release](https://github.com/exacttarget/fuelux/archive/3.1.0.zip).
+- Request files from [the Fuel UX CDN](http://www.fuelcdn.com/fuelux/3.4.0/)
+- [Download the latest release](https://github.com/exacttarget/fuelux/archive/3.4.0.zip).
 - Clone the repo: `git clone https://github.com/exacttarget/fuelux.git`.
 - Install with [Bower](http://bower.io): `bower install fuelux`.
 - Install with [Volo](https://github.com/volojs/volo): `volo add fuelux`.
@@ -97,7 +97,7 @@ our roadmap.
 
 Please do not edit or commit files in the `dist` directory. You'll find source files in the respective `js`, `less`, and `fonts` directory. Project maintainers will commit files in the `dist` directory from time to time. Details on compiling CSS and JavasScript can be found [here](https://github.com/exacttarget/fuelux/blob/master/DETAILS.md#compiling-code).
 
-Prior to submitting a pull request, please run `grunt` to lint & test your code.
+Prior to submitting a pull request, please run `grunt` to lint & test your code. All pull requests are validated via [Travis CI](https://travis-ci.org/). If the tests fail unexpectedly feel free to [trigger a restart](https://github.com/exacttarget/fuelux/blob/master/DETAILS.md#travis-ci).
 
 Take care to maintain the existing coding style (tabs, clarity over brevity, declarative markup, semicolons, etc).
 

@@ -8,6 +8,7 @@ Additional details to supplement the brief nature of the README file.
  * [Compiling code](#compiling-code)
  * [Running docs locally](#running-docs-locally)
  * [Contributors](#contributors)
+ * [Travis CI](#travis-ci)
 
 ## Using Fuel UX
 
@@ -29,7 +30,7 @@ Fuel UX can be applied to a section of your your HTML or the entire page by addi
 ## Downloading code
 Fuel UX can be obtained in any of the following ways:
 
-* Request files from [the Fuel UX CDN](http://www.fuelcdn.com/fuelux/3.1.0/)
+* Request files from [the Fuel UX CDN](http://www.fuelcdn.com/fuelux/3.4.0/)
 * Using [Bower](https://github.com/bower/bower) (ensures you get all the [dependencies](#dependencies)):
 
    ```
@@ -52,7 +53,7 @@ Fuel UX can be obtained in any of the following ways:
 
    Cloning the repository ensures you can apply future updates to Fuel UX easily, but requires to you manage its [dependencies](#dependencies) on your own.
 
-* Download a .zip archive of the [latest release](http://www.fuelcdn.com/fuelux/3.1.0/fuelux.zip).
+* Download a .zip archive of the [latest release](http://www.fuelcdn.com/fuelux/3.4.0/fuelux.zip).
 
 ## AMD support
 
@@ -62,7 +63,7 @@ If using AMD (such as [RequireJS](http://requirejs.org)), reference the FuelUX d
 ```javascript
 require.config({
     paths: {
-        'fuelux': 'http://www.fuelcdn.com/fuelux/3.1.0/'
+        'fuelux': 'http://www.fuelcdn.com/fuelux/3.4.0/'
         //...
     }
 });
@@ -139,3 +140,30 @@ Giving credit where credit is due.
 |Steven Rogers | [![soldoutactivist on Github](https://raw.githubusercontent.com/ExactTarget/fuelux/gh-pages/invertocat-sm.png)](http://github.com/soldoutactivist)|
 |*Alex Vernacchia (current)* | [![vernacchia on Twitter](https://raw.githubusercontent.com/ExactTarget/fuelux/gh-pages/invertobird-sm.png)](http://twitter.com/vernacchia) [![vernak2539 on Github](https://raw.githubusercontent.com/ExactTarget/fuelux/gh-pages/invertocat-sm.png)](http://github.com/vernak2539)|
 |*David Waltz (current)* | [![dwaltz on Github](https://raw.githubusercontent.com/ExactTarget/fuelux/gh-pages/invertocat-sm.png)](http://github.com/dwaltz)|
+
+## Travis CI
+
+Pull requests are validate via [Travis CI](https://travis-ci.org/).
+
+Periodically pull requests may fail Travis CI build integration testing with a false negative. If you suspect this is the case you can restart the test via the command line.
+
+### Install Travis CI Client
+
+Travis requires ruby and the [appropriate ruby gem](https://github.com/travis-ci/travis.rb#installation).
+
+### Acquire build number
+
+Restarting the build requires a build number.
+
+1. Click the "details" link in the failed build request.
+
+2. Copy the number in red button on the far right of the Travis dashboard.
+
+### Restart test
+
+With Travis installed and the build number acquired now run the following command.
+
+```
+travis restart 9999
+```
+

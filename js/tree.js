@@ -8,7 +8,7 @@
 
 // -- BEGIN UMD WRAPPER PREFACE --
 
-// For more information on UMD visit: 
+// For more information on UMD visit:
 // https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
 
 (function (factory) {
@@ -32,29 +32,13 @@
 		this.$element = $(element);
 		this.options = $.extend({}, $.fn.tree.defaults, options);
 
-		this.$element.on('click.fu.tree', '.tree-item', $.proxy(function (ev) {
-			this.selectItem(ev.currentTarget);
-		}, this));
-		this.$element.on('click.fu.tree', '.tree-branch-name', $.proxy(function (ev) {
-			this.openFolder(ev.currentTarget);
-		}, this));
+		this.$element.on('click.fu.tree', '.tree-item', $.proxy( function(ev) { this.selectItem(ev.currentTarget); } ,this));
+		this.$element.on('click.fu.tree', '.tree-branch-name', $.proxy( function(ev) { this.openFolder(ev.currentTarget); }, this));
 
-		if (this.options.folderSelect) {
+		if( this.options.folderSelect ){
 			this.$element.off('click.fu.tree', '.tree-branch-name');
-			this.$element.on('click.fu.tree', '.icon-caret', $.proxy(function (ev) {
-				this.openFolder($(ev.currentTarget).parent());
-			}, this));
-			this.$element.on('click.fu.tree', '.tree-branch-name', $.proxy(function (ev) {
-				this.selectFolder($(ev.currentTarget));
-			}, this));
-		}
-		if (this.options.intermediate) {
-			this.$element.on('click.fu.tree', '.tree-branch-header .checkbox', $.proxy(function (ev) {
-				this.selectFolder($(ev.currentTarget));
-			}, this));
-			this.$element.on('click.fu.tree', '.tree-item .checkbox', $.proxy(function (ev) {
-				this.selectItem($(ev.currentTarget));
-			}, this));
+			this.$element.on('click.fu.tree', '.icon-caret', $.proxy( function(ev) { this.openFolder($(ev.currentTarget).parent()); }, this));
+			this.$element.on('click.fu.tree', '.tree-branch-name', $.proxy( function(ev) { this.selectFolder($(ev.currentTarget)); }, this));
 		}
 
 		this.render();
@@ -63,7 +47,7 @@
 	Tree.prototype = {
 		constructor: Tree,
 
-		destroy: function () {
+		destroy: function() {
 			// any external bindings [none]
 			// empty elements to return to original markup
 			this.$element.find("li:not([data-template])").remove();
@@ -85,7 +69,6 @@
 			var intermediate = this.options.intermediate;
 
 			loader.removeClass('hide');
-
 			this.options.dataSource( treeData ? treeData : {} , function (items) {
 				loader.addClass('hide');
 
@@ -116,22 +99,24 @@
 						}
 					}
 
-					// Decorate $entity with data making the element
-					// easily accessable with libraries like jQuery.
+					// Decorate $entity with data or other attributes making the
+					// element easily accessable with libraries like jQuery.
 					//
 					// Values are contained within the object returned
-					// for folders and items as dataAttributes:
+					// for folders and items as attr:
 					//
 					// {
-					//     name: "An Item",
+					//     text: "An Item",
 					//     type: 'item',
-					//     dataAttributes = {
+					//     attr = {
 					//         'classes': 'required-item red-text',
 					//         'data-parent': parentId,
 					//         'guid': guid,
 					//         'id': guid
 					//     }
 					// };
+					//
+					// the "name" attribute is also supported but is deprecated for "text".
 
 					// add attributes to tree-branch or tree-item
 					var attr = value['attr'] || value.dataAttributes || [];
