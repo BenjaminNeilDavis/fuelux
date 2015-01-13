@@ -22,6 +22,7 @@
 				{
 					appearance: 'small, usually furry, domesticated carnivorous mammal',
 					commonName: 'cat',
+					search: 'cat',
 					latinName: 'Felis catus',
 					sound: 'Meow meow!'
 				},

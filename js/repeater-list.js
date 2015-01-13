@@ -139,6 +139,7 @@
 			list_highlightSortedColumn: false,
 			list_infiniteScroll: false,
 			list_noItemsHTML: '',
+			list_noMatchingItemsHTML: '',
 			list_selectable: false,
 			list_sortClearing: false,
 			list_rowRendered: null
@@ -380,10 +381,22 @@
 							obj.item = $item;
 
 							if(helpers.data.items.length<1){
+
 								obj.skipNested = true;
+								this.$search = this.$element.find('.repeater-search').find('.search');
+								this.$filters = this.$element.find('.repeater-filters');
+								var searched = $('.repeater-search .search').hasClass('searched') ? true : false;
 								$empty = $('<tr class="empty"><td colspan="' + this.list_columns.length + '"></td></tr>');
-								$empty.find('td').append(this.viewOptions.list_noItemsHTML);
+								if (searched){
+									$empty.find('td').append(this.viewOptions.list_noMatchingItemsHTML);
+								}
+								else {
+									$empty.find('td').append(this.viewOptions.list_noItemsHTML);
+								}
+
 								$item.append($empty);
+
+
 							}
 
 							callback(obj);
