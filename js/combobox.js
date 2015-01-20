@@ -41,8 +41,19 @@
 		this.$element.on('change.fu.combobox', 'input', $.proxy(this.inputchanged, this));
 		this.$element.on('shown.bs.dropdown', $.proxy(this.menuShown, this));
 
+		var autoResizeMenuAttr = this.$element.attr('data-autoResizeMenu') === 'true';
+
 		// set default selection
 		this.setDefaultSelection();
+
+		if (this.options.autoResizeMenu === true || autoResizeMenuAttr) {
+			this.resizeMenu();
+		}
+
+		if (this.options.autoResizeInput === true || this.$element.attr('data-resizeInput') === 'true') {
+			this.resizeInput();
+		}
+
 	};
 
 	Combobox.prototype = {
@@ -84,6 +95,41 @@
 		resizeMenu: function(){
 			var width = this.$element.outerWidth();
 			this.$dropMenu.outerWidth(width);
+		},
+
+		resizeInput: function() {
+			var width = 0;
+			var newWidth = 0;
+			var sizer = $('<div/>').addClass('combobox-sizer input-group');
+			var comboInput = $('<span/>').addClass('form-control');
+
+
+			if( Boolean( $(document).find( 'html' ).hasClass( 'fuelux' ) ) ) {
+				// default behavior for fuel ux setup. means fuelux was a class on the html tag
+				$( document.body ).append( sizer);
+			} else {
+				// fuelux is not a class on the html tag. So we'll look for the first one we find so the correct styles get applied to the sizer
+				$( '.fuelux:first' ).append( sizer );
+			}
+
+			sizer.append(comboInput);
+
+			this.$element.find('a').each(function () {
+				sizer.find('.form-control').text($(this).text());
+				newWidth = sizer.outerWidth();
+				if(newWidth > width) {
+					width = newWidth;
+				}
+			});
+
+			this.$input.css('width', width);
+
+			var elemWidth = this.$element.outerWidth();
+
+			this.$dropMenu.css('width', elemWidth);
+
+			sizer.remove();
+
 		},
 
 		selectedItem: function () {
@@ -214,7 +260,8 @@
 	};
 
 	$.fn.combobox.defaults = {
-		autoResizeMenu: true
+		autoResizeMenu: true,
+		autoResizeInput: false
 	};
 
 	$.fn.combobox.Constructor = Combobox;

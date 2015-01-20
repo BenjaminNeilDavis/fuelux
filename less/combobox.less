@@ -9,4 +9,22 @@
 			display:none;
 		}
 	}
+
+	&[data-resizeInput="true"] {
+		.dropdown-menu {
+			min-width: inherit;
+		}
+		.form-control {
+			float: left;
+			width: auto;
+		}
+		.input-group-btn {
+			float: left;
+			position: static;
+		}
+		.dropdown-menu-right {
+			right:auto;
+			left: 0;
+		}
+	}
 }
