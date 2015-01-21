@@ -46,14 +46,9 @@
 		// set default selection
 		this.setDefaultSelection();
 
-		if (this.options.autoResizeMenu === true || autoResizeMenuAttr) {
-			this.resizeMenu();
+		if (this.options.resize === 'auto') {
+			this.resize();
 		}
-
-		if (this.options.autoResizeInput === true || this.$element.attr('data-resizeInput') === 'true') {
-			this.resizeInput();
-		}
-
 	};
 
 	Combobox.prototype = {
@@ -87,7 +82,7 @@
 		},
 
 		menuShown: function(){
-			if(this.options.autoResizeMenu){
+			if(!this.options.resize){
 				this.resizeMenu();
 			}
 		},
@@ -97,7 +92,7 @@
 			this.$dropMenu.outerWidth(width);
 		},
 
-		resizeInput: function() {
+		resize: function() {
 			var width = 0;
 			var newWidth = 0;
 			var sizer = $('<div/>').addClass('combobox-sizer input-group');
@@ -260,8 +255,7 @@
 	};
 
 	$.fn.combobox.defaults = {
-		autoResizeMenu: true,
-		autoResizeInput: false
+		resize: false
 	};
 
 	$.fn.combobox.Constructor = Combobox;

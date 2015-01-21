@@ -39,7 +39,7 @@
 		this.$element.on('click.fu.selectlist', '.dropdown-menu a', $.proxy(this.itemClicked, this));
 		this.setDefaultSelection();
 
-		if (options.resize === 'auto' || this.$element.attr('data-resize') === 'auto') {
+		if (this.options.resize === 'auto') {
 			this.resize();
 		}
 	};

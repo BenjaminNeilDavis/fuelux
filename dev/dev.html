@@ -352,10 +352,22 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<div class="btn-group selectlist" data-resize="auto" data-initialize="selectlist" id="mySelectlist">
+				<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
+					<span class="selected-label"></span>
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li data-value="1"><a href="#">One</a></li>
+					...
+				</ul>
+				<input class="hidden hidden-field" name="mySelectlist" readonly="readonly" aria-hidden="true" type="text"/>
+			</div>
 
 
 			<div>
-				<div class="input-group input-append dropdown combobox" data-resizeInput="true" data-initialize="combobox" id="myCombobox">
+				<div class="input-group input-append dropdown combobox" data-resize="auto" data-initialize="combobox" id="myCombobox">
 					<input type="text" class="form-control">
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
@@ -369,7 +381,21 @@
 
 			</div>
 			<div style="margin-top: 20px">
-				<div class="input-group input-append dropdown combobox" data-resizeMenu="false" data-initialize="combobox" id="myCombobox2">
+				<div class="input-group input-append dropdown combobox" data-initialize="combobox" id="myCombobox2">
+					<input type="text" class="form-control">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li data-value="1" data-selected="true"><a href="#">One Two Three</a></li>
+							<li data-value="1"><a href="#">One Two</a></li>
+							<li data-value="1"><a href="#">One</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<div style="margin-top: 20px">
+				<div class="input-group input-append dropdown combobox" data-initialize="combobox" id="myCombobox4">
 					<input type="text" class="form-control">
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
