@@ -136,6 +136,13 @@ module.exports = function (grunt) {
 					compile: true
 				}
 			},
+			compile_fuelux3: {
+				src: ['src/less/fuelux2-fuelux3-happy.less'],
+				dest: 'dist/css/fuelux2-fuelux3-happy.css',
+				options: {
+					compile: true
+				}
+			},
 			compress: {
 				src: ['src/less/fuelux.less'],
 				dest: 'dist/css/fuelux.min.css',
@@ -147,6 +154,14 @@ module.exports = function (grunt) {
 			compress_responsive: {
 				src: ['src/less/fuelux-responsive.less'],
 				dest: 'dist/css/fuelux-responsive.min.css',
+				options: {
+					compile: true,
+					compress: true
+				}
+			},
+			compress_fuelux3: {
+				src: ['src/less/fuelux2-fuelux3-happy.less'],
+				dest: 'dist/css/fuelux2-fuelux3-happy.min.css',
 				options: {
 					compile: true,
 					compress: true
@@ -192,8 +207,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('fulltest', ['connect', 'jshint', 'qunit:full']);
 	grunt.registerTask('saucelabs', ['connect', 'jshint', 'saucelabs-qunit']);
 
-	grunt.registerTask('quickcss', ['recess:compile', 'recess:compile_responsive']);
-	grunt.registerTask('fullcss', ['quickcss', 'recess:compress', 'recess:compress_responsive']);
+	grunt.registerTask('quickcss', ['recess:compile', 'recess:compile_responsive', 'recess:compile_fuelux3']);
+	grunt.registerTask('fullcss', ['quickcss', 'recess:compress', 'recess:compress_responsive', 'recess:compress_fuelux3']);
 
 	grunt.registerTask('default', ['fulltest', 'requirejs', 'fullcss', 'copy:images', 'clean:dist', 'uglify', 'copy:zipsrc', 'compress', 'clean:zipsrc']);
 	grunt.registerTask('devserver', ['quicktest', 'quickcss', 'connect', 'watch']);
