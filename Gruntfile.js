@@ -149,7 +149,7 @@ module.exports = function (grunt) {
 							index: ['index.html', 'tests.html'],
 						}
 					},
-					port: process.env.PORT || 8000,
+					port: process.env.PORT || 7000,
 					useAvailablePort: true // increment port number, if unavailable...
 				}
 			},
@@ -307,7 +307,9 @@ module.exports = function (grunt) {
 					sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
 				},
 				files: {
-					'dist/css/fuelux.css': 'less/fuelux-namespace.less'
+					'dist/css/fuelux.css': 'less/fuelux-namespace.less',
+					'dist/css/fuelux-3-primary-3.css': 'less/fuelux-3-primary-3.less',
+					'dist/css/fuelux-3-primary-2.css': 'less/fuelux-3-primary-2.less'
 				}
 			},
 
