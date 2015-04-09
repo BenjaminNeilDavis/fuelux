@@ -136,9 +136,16 @@ module.exports = function (grunt) {
 					compile: true
 				}
 			},
-			compile_fuelux3: {
-				src: ['src/less/fuelux2-fuelux3-happy.less'],
-				dest: 'dist/css/fuelux2-fuelux3-happy.css',
+			compile_fuelux2_primary_2: {
+				src: ['src/less/fuelux-2-primary-2.less'],
+				dest: 'dist/css/fuelux-2-primary-2.css',
+				options: {
+					compile: true
+				}
+			},
+			compile_fuelux2_primary_3: {
+				src: ['src/less/fuelux-2-primary-3.less'],
+				dest: 'dist/css/fuelux-2-primary-3.css',
 				options: {
 					compile: true
 				}
@@ -159,9 +166,17 @@ module.exports = function (grunt) {
 					compress: true
 				}
 			},
-			compress_fuelux3: {
-				src: ['src/less/fuelux2-fuelux3-happy.less'],
-				dest: 'dist/css/fuelux2-fuelux3-happy.min.css',
+			compress_fuelux2_primary_2: {
+				src: ['src/less/fuelux-2-primary-2.less'],
+				dest: 'dist/css/fuelux-2-primary-2.min.css',
+				options: {
+					compile: true,
+					compress: true
+				}
+			},
+			compress_fuelux2_primary_3: {
+				src: ['src/less/fuelux-2-primary-3.less'],
+				dest: 'dist/css/fuelux-2-primary-3.min.css',
 				options: {
 					compile: true,
 					compress: true
@@ -207,8 +222,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('fulltest', ['connect', 'jshint', 'qunit:full']);
 	grunt.registerTask('saucelabs', ['connect', 'jshint', 'saucelabs-qunit']);
 
-	grunt.registerTask('quickcss', ['recess:compile', 'recess:compile_responsive', 'recess:compile_fuelux3']);
-	grunt.registerTask('fullcss', ['quickcss', 'recess:compress', 'recess:compress_responsive', 'recess:compress_fuelux3']);
+	grunt.registerTask('quickcss', ['recess:compile', 'recess:compile_responsive', 'recess:compile_fuelux2_primary_2', 'recess:compile_fuelux2_primary_3']);
+	grunt.registerTask('fullcss', ['quickcss', 'recess:compress', 'recess:compress_responsive', 'recess:compress_fuelux2_primary_2', 'recess:compress_fuelux2_primary_3']);
 
 	grunt.registerTask('default', ['fulltest', 'requirejs', 'fullcss', 'copy:images', 'clean:dist', 'uglify', 'copy:zipsrc', 'compress', 'clean:zipsrc']);
 	grunt.registerTask('devserver', ['quicktest', 'quickcss', 'connect', 'watch']);
