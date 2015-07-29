@@ -247,7 +247,7 @@
 			}
 
 			var selectlist = '<div class="btn-group">' +
-				'<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" data-flip="auto" aria-expanded="false">' +
+				'<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-target-parent="true" data-toggle="dropdown" data-flip="auto" aria-expanded="false">' +
 				'<span class="caret"></span>' +
 				'</button>' +
 				'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
